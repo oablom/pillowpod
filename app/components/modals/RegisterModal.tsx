@@ -9,6 +9,7 @@ import useRegisterModal from "../../hooks/useRegisterModal";
 import Input from "../inputs/Input";
 import toast from "react-hot-toast";
 import Button from "../Button";
+import { signIn } from "next-auth/react";
 
 import { FcGoogle } from "react-icons/fc";
 
@@ -22,7 +23,7 @@ const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
     },
@@ -92,7 +93,7 @@ const RegisterModal = () => {
         outline
         label="Continue with GitHub"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="flex justify-center flex-row items-center gap-2">
         <div className="">Already have an account?</div>

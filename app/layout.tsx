@@ -7,7 +7,7 @@ import Navbar from "./components/navbar/Navbar";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProvider from "./components/providers/ToasterProvider";
 import LoginModal from "./components/modals/LoginModal";
-
+import getCurrentUser from "./actions/getCurrentUser";
 // import { Toaster } from "react-hot-toast";
 // import ClientOnly from "./components/ClientOnly";
 const font = Nunito({
@@ -30,11 +30,13 @@ export const metadata: Metadata = {
   description: "An enhanced AirBnB experience",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={font.className}>
@@ -44,7 +46,7 @@ export default function RootLayout({
         <ToasterProvider />
         <RegisterModal />
         <LoginModal />
-        <Navbar></Navbar>
+        <Navbar currentUser={currentUser}></Navbar>
         {/* </ClientOnly> */}
         {children}
       </body>

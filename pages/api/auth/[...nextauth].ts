@@ -19,12 +19,13 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Authorize running");
         if (!credentials || !credentials.email || !credentials.password) {
           throw new Error("Missing credentials");
         }
@@ -44,6 +45,8 @@ export const authOptions: AuthOptions = {
           user.hashedPassword
         );
 
+        console.log("Password match:", isCorrectPassword);
+
         if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
         }
@@ -53,6 +56,7 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: "/",
+    error: "/error",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
