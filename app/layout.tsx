@@ -5,6 +5,10 @@ import "./globals.css";
 import { Nunito } from "next/font/google";
 import Navbar from "./components/navbar/Navbar";
 import RegisterModal from "./components/modals/RegisterModal";
+import ToasterProvider from "./components/providers/ToasterProvider";
+import LoginModal from "./components/modals/LoginModal";
+
+// import { Toaster } from "react-hot-toast";
 // import ClientOnly from "./components/ClientOnly";
 const font = Nunito({
   subsets: ["latin"],
@@ -36,7 +40,10 @@ export default function RootLayout({
       <body className={font.className}>
         {/* <ClientOnly> */}
         {/* <Modal isOpen={true} actionLabel="Submit" /> */}
+        {/* <ToasterProvider /> */}
+        <ToasterProvider />
         <RegisterModal />
+        <LoginModal />
         <Navbar></Navbar>
         {/* </ClientOnly> */}
         {children}

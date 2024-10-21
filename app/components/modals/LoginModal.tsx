@@ -1,19 +1,24 @@
 "use client";
-import axios from "axios";
+// import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { useCallback, useState } from "react";
 import { FieldValues, set, SubmitHandler, useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import useRegisterModal from "../../hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import Input from "../inputs/Input";
 import toast from "react-hot-toast";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 import { FcGoogle } from "react-icons/fc";
 
-const RegisterModal = () => {
+const LoginModal = () => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -22,7 +27,6 @@ const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      username: "",
       email: "",
       password: "",
     },
@@ -31,27 +35,26 @@ const RegisterModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    axios
-      .post("/api/register", data)
-      .then(() => {
-        registerModal.onClose();
-        // setIsLoading(false);
-      })
-      .catch((error) => {
-        toast.error(
-          error.response.data.message
-            ? error.response.data.message
-            : "An error occurred"
-        );
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((response) => {
+      setIsLoading(false);
+
+      if (response?.ok) {
+        toast.success("Logged in successfully");
+        router.refresh();
+        loginModal.onClose();
+      }
+      if (response?.error) {
+        toast.error(response.error);
+      }
+    });
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to PillowPod" subtitle="A restful place" center />
+      <Heading title="Welcome back!" subtitle="Login to your account" center />
       <Input
         id="email"
         label="Email"
@@ -60,14 +63,7 @@ const RegisterModal = () => {
         errors={errors}
         required
       />
-      <Input
-        id="name"
-        label="Name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
+
       <Input
         id="password"
         label="Password"
@@ -108,10 +104,10 @@ const RegisterModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Register"
+      isOpen={loginModal.isOpen}
+      title="Login"
       actionLabel="Continue"
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
@@ -119,4 +115,4 @@ const RegisterModal = () => {
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
