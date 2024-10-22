@@ -36,6 +36,8 @@ const RegisterModal = () => {
       .post("/api/register", data)
       .then(() => {
         registerModal.onClose();
+        toast.success("Registration successful!"); // Bekräftelsemeddelande
+        signIn("credentials", { email: data.email, password: data.password });
         // setIsLoading(false);
       })
       .catch((error) => {
@@ -87,7 +89,7 @@ const RegisterModal = () => {
         outline
         label="Continue with google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
