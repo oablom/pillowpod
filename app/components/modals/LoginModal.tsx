@@ -1,7 +1,7 @@
 "use client";
 // import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
-import { useCallback, useState } from "react";
+import { use, useCallback, useState } from "react";
 import { FieldValues, set, SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Modal from "./Modal";
@@ -52,6 +52,11 @@ const LoginModal = () => {
     });
   };
 
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
+
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome back!" subtitle="Login to your account" center />
@@ -91,12 +96,12 @@ const LoginModal = () => {
         onClick={() => signIn("github")}
       />
       <div className="flex justify-center flex-row items-center gap-2">
-        <div className="">Already have an account?</div>
+        <div className="">First time using PillowPod?</div>
         <div
-          onClick={registerModal.onClose}
+          onClick={toggle}
           className="text-neutral-800 cursor-pointer hover:underline"
         >
-          Log in
+          Register
         </div>
       </div>
     </div>
