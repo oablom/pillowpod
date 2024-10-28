@@ -8,8 +8,14 @@ interface RentModalStore {
 
 const useRentModal = create<RentModalStore>((set) => ({
   isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
+  onOpen: () => {
+    console.log("Rent modal opened");
+    set({ isOpen: true });
+  },
+  onClose: () => {
+    console.log("Rent modal closed");
+    set({ isOpen: false });
+  },
 }));
 
 export default useRentModal;

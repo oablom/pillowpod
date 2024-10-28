@@ -8,6 +8,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProvider from "./components/providers/ToasterProvider";
 import LoginModal from "./components/modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
+import RentModal from "./components/modals/RentModal";
 // import { Toaster } from "react-hot-toast";
 // import ClientOnly from "./components/ClientOnly";
 const font = Nunito({
@@ -45,6 +46,7 @@ export default async function RootLayout({
         {/* <ToasterProvider /> */}
         <ToasterProvider />
         <RegisterModal />
+        <RentModal />
         <LoginModal />
         <Navbar currentUser={currentUser}></Navbar>
         {/* </ClientOnly> */}
