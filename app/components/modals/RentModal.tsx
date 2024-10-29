@@ -115,7 +115,7 @@ const RentModal = () => {
       isOpen={rentModal.isOpen}
       title="Rent away your pod"
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
