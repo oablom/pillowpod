@@ -1,5 +1,5 @@
 import prisma from "@/app/libs/prismadb";
-import { ca } from "date-fns/locale";
+import { ObjectId } from "mongodb"; // Importera ObjectId
 
 interface IParams {
   listingId?: string;
@@ -9,9 +9,17 @@ export async function getListingById(params: IParams) {
   try {
     const { listingId } = params;
 
+    // Kontrollera och konvertera listingId till ObjectId om det är giltigt
+    if (!listingId || !ObjectId.isValid(listingId)) {
+      console.error("Invalid listingId format");
+      return null;
+    }
+
+    const objectId = new ObjectId(listingId); // Skapa en ObjectId från listingId
+
     const listing = await prisma.listing.findUnique({
       where: {
-        id: listingId,
+        id: objectId as any, // Använd objectId och kringgå TypeScript-fel
       },
       include: {
         user: true,
@@ -21,6 +29,7 @@ export async function getListingById(params: IParams) {
     if (!listing) {
       return null;
     }
+
     return {
       ...listing,
       createdAt: listing.createdAt.toISOString(),
@@ -32,6 +41,7 @@ export async function getListingById(params: IParams) {
       },
     };
   } catch (error: any) {
-    console.error(error);
+    console.error("Error in getListingById:", error);
+    return null;
   }
 }

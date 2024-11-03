@@ -9,22 +9,17 @@ interface IParams {
 
 export default async function getReservations(params: IParams) {
   try {
-    const { listingId, userId, authorId } = params;
-    console.log("Listing ID i getReservations:", listingId);
+    const { userId, authorId } = params;
+    let listingId = params.listingId;
 
-    const query: any = {};
-
-    if (listingId) {
-      query.listingId = listingId;
+    if (listingId && ObjectId.isValid(listingId)) {
+      listingId = new ObjectId(listingId) as any;
+    } else if (listingId) {
+      console.error("Invalid listingId format for ObjectId");
+      return [];
     }
 
-    if (userId) {
-      query.userId = userId;
-    }
-
-    if (authorId) {
-      query.listing = { userId: authorId };
-    }
+    const query: any = { listingId, userId, authorId };
 
     const reservations = await prisma.reservation.findMany({
       where: query,
@@ -49,6 +44,7 @@ export default async function getReservations(params: IParams) {
 
     return safeReservations;
   } catch (error: any) {
-    throw new Error(error);
+    console.error("Error in getReservations:", error);
+    return [];
   }
 }
