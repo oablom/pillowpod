@@ -38,7 +38,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
           className="object-cover w-full"
         />
         <div className="absolute top-5 right-5">
-          <HeartButton listingId={id} currentUser={currentUser} />
+          <HeartButton listingId={id} currentUser={currentUser ?? null} />
         </div>
       </div>
     </>
