@@ -1,4 +1,5 @@
 import prisma from "@/app/libs/prismadb";
+import { ObjectId } from "mongodb";
 
 interface IParams {
   listingId?: string;
@@ -9,6 +10,7 @@ interface IParams {
 export default async function getReservations(params: IParams) {
   try {
     const { listingId, userId, authorId } = params;
+    console.log("Listing ID i getReservations:", listingId);
 
     const query: any = {};
 

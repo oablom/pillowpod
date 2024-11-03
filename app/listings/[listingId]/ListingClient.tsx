@@ -111,7 +111,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
             title={listing.title}
             imageSrc={listing.imageSrc}
             locationValue={listing.locationValue}
-            id={parseFloat(listing.id)}
+            id={listing.id}
             currentUser={currentUser}
           />
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
