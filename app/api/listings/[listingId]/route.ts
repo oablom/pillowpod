@@ -28,4 +28,6 @@ export async function Delete(
       userId: currentUser.id,
     },
   });
+
+  return NextResponse.json(listing);
 }
