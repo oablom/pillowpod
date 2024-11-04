@@ -17,7 +17,7 @@ export default async function getReservations(params: IParams) {
 
     // Konvertera listingId till ObjectId om det är giltigt
     if (listingId) {
-      query.listingId = new ObjectId(listingId); // Omvandlar listingId till ObjectId
+      query.listingId = listingId; // Omvandlar listingId till ObjectId
     }
 
     if (userId) {
