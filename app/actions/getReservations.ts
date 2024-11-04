@@ -1,4 +1,5 @@
 import prisma from "@/app/libs/prismadb";
+import { console } from "inspector";
 import { ObjectId } from "mongodb";
 
 interface IParams {
@@ -10,14 +11,14 @@ interface IParams {
 export default async function getReservations(params: IParams) {
   try {
     const { listingId, userId, authorId } = params;
+
     console.log("Listing ID i getReservations:", listingId);
     console.log("Listing ID:", listingId, "Type:", typeof listingId);
 
     const query: any = {};
 
-    // Konvertera listingId till ObjectId om det är giltigt
     if (listingId) {
-      query.listingId = listingId; // Omvandlar listingId till ObjectId
+      query.listingId = listingId;
     }
 
     if (userId) {
@@ -43,12 +44,10 @@ export default async function getReservations(params: IParams) {
       createdAt: reservation.createdAt.toISOString(),
       startDate: reservation.startDate.toISOString(),
       endDate: reservation.endDate.toISOString(),
-      listing: reservation.listing
-        ? {
-            ...reservation.listing,
-            createdAt: reservation.listing.createdAt.toISOString(),
-          }
-        : null,
+      listing: {
+        ...reservation.listing,
+        createdAt: reservation.listing.createdAt.toISOString(),
+      },
     }));
 
     return safeReservations;
