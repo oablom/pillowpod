@@ -6,7 +6,7 @@ interface IParams {
   listingId?: string;
 }
 
-export async function Delete(
+export async function DELETE(
   request: Request,
   { params }: { params: IParams }
 ) {
