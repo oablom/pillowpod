@@ -11,11 +11,13 @@ export default async function getReservations(params: IParams) {
   try {
     const { listingId, userId, authorId } = params;
     console.log("Listing ID i getReservations:", listingId);
+    console.log("Listing ID:", listingId, "Type:", typeof listingId);
 
     const query: any = {};
 
+    // Konvertera listingId till ObjectId om det är giltigt
     if (listingId) {
-      query.listingId = listingId;
+      query.listingId = new ObjectId(listingId); // Omvandlar listingId till ObjectId
     }
 
     if (userId) {
@@ -41,10 +43,12 @@ export default async function getReservations(params: IParams) {
       createdAt: reservation.createdAt.toISOString(),
       startDate: reservation.startDate.toISOString(),
       endDate: reservation.endDate.toISOString(),
-      listing: {
-        ...reservation.listing,
-        createdAt: reservation.listing.createdAt.toISOString(),
-      },
+      listing: reservation.listing
+        ? {
+            ...reservation.listing,
+            createdAt: reservation.listing.createdAt.toISOString(),
+          }
+        : null,
     }));
 
     return safeReservations;

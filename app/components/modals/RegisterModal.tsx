@@ -38,6 +38,7 @@ const RegisterModal = () => {
       .post("/api/register", data)
       .then(() => {
         registerModal.onClose();
+        // loginModal.onOpen();
         toast.success("Registration successful!"); // Bekräftelsemeddelande
         signIn("credentials", { email: data.email, password: data.password });
         // setIsLoading(false);

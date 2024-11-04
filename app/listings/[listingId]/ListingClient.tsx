@@ -67,7 +67,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
-        listingId: listing.id,
+        listingId: listing?.id,
       })
       .then((response) => {
         // setIsLoading(false);
