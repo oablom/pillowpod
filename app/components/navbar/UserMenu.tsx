@@ -51,7 +51,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         rounded-full
         hover:bg-neutral-100
         transition
-        cursor-pointer"
+        cursor-pointer
+       "
         >
           AirBnB your pod
         </div>
@@ -87,7 +88,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         shadow-md
         w-[40vw]
         md:w-3/4
-        bg-whiteoverflow-hidden
+        bg-white
+        overflow-hidden
         right-0
         top-12
         text-sm
